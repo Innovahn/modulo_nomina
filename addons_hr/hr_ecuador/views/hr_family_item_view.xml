@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model='ir.ui.view' id='view_hr_family_item_form'>
+			<field name='name'>hr.family.item</field>
+			<field name='model'>hr.family.item</field>
+			<field name='type'>form</field>
+			<field name='arch' type='xml'>
+				<form string='Carga Familiar'>
+					<field name='name' select='1'/>
+					<field name='parentezco' required='1'/>
+					<field name='birth' on_change="onchange_birth(birth)" context="{'age': age}"/>
+					<field name='age'/>
+					<field name='asegurado'/>
+				</form>
+			</field>				
+		</record>
+
+		<record model="ir.actions.act_window" id="view_hr_family_item">
+		    <field name="name">hr.family.item</field>
+		    <field name="res_model">hr.family.item</field>
+		    <field name="view_type">form</field>
+		    <field name="view_id" ref="view_hr_family_item_form"/>
+		</record>
+
+	</data>
+</openerp>

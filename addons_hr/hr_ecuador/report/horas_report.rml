@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="8.0" leading="10"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P7" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="P8" fontName="Times-Roman" alignment="JUSTIFY"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="482.0" style="Tabla1">
+      <tr>
+        <td>
+          <para style="P1">[[repeatIn(objects, 'o')]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="241.0,241.0" style="Tabla2">
+      <tr>
+        <td>
+          <para style="P5">REPORTE HORAS EXTRAS</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">Departamento: [[ o.departament_id.name]]</para>
+        </td>
+        <td>
+          <para style="P4">Usuario: [[o.name]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">Mes: [[o.periodo_id.name]]</para>
+        </td>
+        <td>
+          <para style="P4">Fecha Imp: [[ time.strftime('%Y-%m-%d') ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P7">DETALLE</para>
+    <para style="P6">[[repeatIn(o.resumen_line, 'line')]]</para>
+    <blockTable colWidths="152.0,19.0,21.0,19.0,19.0,19.0,25.0,26.0,45.0,31.0,32.0,76.0" style="Tabla3">
+      <tr>
+        <td>
+          <para style="P6">EMPLEADO</para>
+        </td>
+        <td>
+          <para style="P6">01</para>
+        </td>
+        <td>
+          <para style="P6">02</para>
+        </td>
+        <td>
+          <para style="P6">04</para>
+        </td>
+        <td>
+          <para style="P6">05</para>
+        </td>
+        <td>
+          <para style="P6">FI</para>
+        </td>
+        <td>
+          <para style="P6">PM</para>
+        </td>
+        <td>
+          <para style="P6">CM</para>
+        </td>
+        <td>
+          <para style="P6">VACAC</para>
+        </td>
+        <td>
+          <para style="P6">FERI</para>
+        </td>
+        <td>
+          <para style="P6">OTR.</para>
+        </td>
+        <td>
+          <para style="P6">TOTAL</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">[[line.employee_id.name]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.hora_100]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.hora_125]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.hora_150]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.hora_200]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.falta_inj]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.perm_medico]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.cal_dom]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.vacaciones]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.feriado]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.otros]]</para>
+        </td>
+        <td>
+          <para style="P2">[[line.total]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P8">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

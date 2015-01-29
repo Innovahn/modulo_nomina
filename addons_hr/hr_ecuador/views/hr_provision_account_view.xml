@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_provision_account_form">
+			<field name="name">hr.provision.account.form</field>
+			<field name="model">hr.provision.account</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Contabilidad">
+				      <group string="Propiedades Contables" col="6" colspan="3">
+					<field name="description" required="1" />
+					<field name="account" required="0" />
+					<field name="type"/>
+				      </group>
+				      <group col="6" colspan="3">
+					<field name="is_income"/>
+					<field name="is_expense"/>
+					<field name="is_provision"/>
+				      </group>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_provision_account_tree">
+			<field name="name">hr.provision.account.tree</field>
+			<field name="model">hr.provision.account</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Propiedades Contables">
+					<field name="description" required="1" select="1"/>
+					<field name="account"/>
+					<field name="is_income" select="1"/>
+					<field name="is_expense" select="1"/>
+					<field name="is_provision" select="1"/>
+					<field name="type"/>
+				</tree>
+			</field>
+		</record>
+
+<!--
+    ==================
+    Solo Provision
+    ==================
+-->
+
+		<record model="ir.ui.view" id="view_provision_account_form1">
+			<field name="name">hr.provision.account.form1</field>
+			<field name="model">hr.provision.account</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Contabilidad">
+				      <group string="Propiedades Contables" col="6" colspan="3">
+					<field name="description" required="1" />
+					<newline/>
+					<field name="account" required="1"/>
+					<field name="account_credit" required="1"/>
+					<field name="type"/>
+					<field name="is_provision"/>
+				      </group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_provision_account_tree1">
+			<field name="name">hr.provision.account.tree1</field>
+			<field name="model">hr.provision.account</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Propiedades Contables">
+					<field name="description" required="1"/>
+					<field name="account"/>
+					<field name="account_credit" select="1"/>
+					<field name="is_provision"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_hr_provision_account1" model="ir.actions.act_window">
+			<field name="name">Info. Contable Provision</field>
+			<field name="res_model">hr.provision.account</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_provision_account_form1"/>
+			<field name="domain">[('is_provision','=','True')]</field>
+		</record>
+
+		<record id="action_hr_provision_account" model="ir.actions.act_window">
+			<field name="name">Info. Contable Ingresos/Egresos</field>
+			<field name="res_model">hr.provision.account</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Contabilidad" 
+			  id="hr_menu_provision_account"
+			  parent="hr.menu_hr_root" 
+			  />
+
+		<menuitem name="Info. Contabilidad Ingresos/Egresos" 
+			  id="hr_menu_provision_account_info"
+			  parent="hr_menu_provision_account" 
+			  action="action_hr_provision_account"/>
+
+		<menuitem name="Info. Contabilidad Provisiones" 
+			  id="hr_menu_provision_account_info1"
+			  parent="hr_menu_provision_account" 
+			  action="action_hr_provision_account1"/>
+
+
+	</data>
+</openerp>

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" alignment="RIGHT"/>
+    <paraStyle name="P5" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="482.0" style="Tabla1">
+      <tr>
+        <td>
+          <para style="P2">INFORMACION INDIVIDUAL SOBRE EL PAGO DE LA DECIMA CUARTA REMUNERACION</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P4">Fecha de Impresion: [[ time.strftime('%Y-%m-%d') ]]</para>
+    <blockTable colWidths="23.0,114.0,77.0,61.0,69.0,69.0,69.0" style="Tabla2">
+      <tr>
+        <td>
+          <para style="P1">No.</para>
+        </td>
+        <td>
+          <para style="P1">NOMBRES</para>
+        </td>
+        <td>
+          <para style="P1">OCUPACION</para>
+        </td>
+        <td>
+          <para style="P1">SEXO</para>
+        </td>
+        <td>
+          <para style="P3">Tiempo Trabajado Periodo</para>
+        </td>
+        <td>
+          <para style="P3">Valor pagado por decima cuarta remuneracion</para>
+        </td>
+        <td>
+          <para style="P3">Firma o Huella digita l del Trabajador</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="23.0,115.0,77.0,61.0,69.0,69.0,69.0" style="Tabla3">
+      <tr>
+        <td>
+          <para style="P1">[[repeatIn(get_employees(data), 't')]]</para>
+        </td>
+        <td>
+          <para style="P1">[[t.name]] </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">[[t.gender]]</para>
+        </td>
+        <td>
+          <para style="P1">1</para>
+        </td>
+        <td>
+          <para style="P1">[[t.total_13]]</para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

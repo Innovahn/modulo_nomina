@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	  
+	<record id="wizard_rdep_export" model="ir.actions.wizard">
+	  <field name="name">Exportar RDEP (Formulario 107)</field>
+	  <field name="wiz_name">wizard.export.rdep</field>
+	</record>
+	
+	<record id="wizard_import_food" model="ir.actions.wizard">
+		<field name="name">Cargar Egreso Comida</field>
+		<field name="wiz_name">wizard.import.food</field>
+	</record>
+
+        <record id="wizard_csv_import" model="ir.actions.wizard">
+            <field name="name">Importar Archivos de Egresos</field>
+            <field name="wiz_name">wizard.load.csv</field>
+        </record>
+        
+        <record id="wizard_cash_payment" model="ir.actions.wizard">
+        	<field name="name">Generar Cash</field>
+       		<field name="wiz_name">wizard.generate.cash</field>
+       	</record>
+
+	<record id="wizard_utilities" model="ir.actions.wizard">
+	  <field name="name">Generar Pago Utilidades</field>
+	  <field name="wiz_name">wizard.utilities</field>
+	</record>
+<!--
+	<record id="wizard_account_report" model="ir.ui.view">
+	  <field name="name">Exportar Archivos para Contabilidad</field>
+	  <field name="model">wizard.account.report</field>
+	  <field name="type">form</field>
+	  <field name="arch" type="xml">
+	    <form string="Exportar Archivos">
+	      <group col="2" fill="0" states="choose">
+		<separator colspan="2" string="Seleccione el Periodo"/>
+		<field name="period_id" required="1"/>
+	      </group>
+	      <group col="1" fill="0" states="get">
+		<separator colspan="2" string="Guardar Archivo Nomina"/>
+		<field name="file_ac" readonly="1"/>
+		<separator colspan="2" string="Guardar Archivo Provisiones"/>
+		<field name="file_prov" readonly="1"/>
+	      </group>
+	      <group col="2" colspan="3" fill="0">
+		<button icon="gtk-cancel" name="act_cancel" special="cancel" states="choose" string="Cancelar" type="object"/>
+		<button icon="gtk-ok" name="act_getfile" states="choose" string="Obtener Archivos" type="object"/>
+		<button icon="gtk-close" name="act_destroy" special="cancel" states="get" string="Cerrar" type="object"/>
+	      </group>
+	    </form>
+	  </field>
+	</record>
+-->
+	<record id="action_wiz_report" model="ir.actions.wizard">
+	  <field name="name">Exportar Archivos para Contabilidad</field>
+	  <field name="wiz_name">wizard.account.report</field>
+	</record>
+
+	<record id="action_wiz_ministerio" model="ir.actions.wizard">
+	  <field name="name">Reportes Ministerio de Trabajo</field>
+	  <field name="wiz_name">wizard.reports</field>
+	</record>
+
+	<record id="action_wiz_adjust" model="ir.actions.wizard">
+	  <field name="name">Ajuste Impuesto a la Renta</field>
+	  <field name="wiz_name">wizard.adjust.rdep</field>
+	</record>
+
+	<record id="action_wiz_upwage" model="ir.actions.wizard">
+	  <field name="name">Actualizar Sueldo</field>
+	  <field name="wiz_name">wizard.update.wage</field>
+	</record>
+
+	<record id="action_wiz_account" model="ir.actions.wizard">
+	  <field name="name">Reporte de Contabilidad</field>
+	  <field name="wiz_name">wizard.payroll.account</field>
+	</record>
+
+        <menuitem 
+            id="menu_hr_utilities" 
+            name="Utilidades" 
+            parent="hr.menu_hr_root"
+            sequence="10"/>
+
+	<menuitem
+	   id="menu_sri"
+	   name="SRI"
+	   parent="hr.menu_hr_root"
+	   sequence="11"/>
+
+	<menuitem
+	   id="menu_ministerio"
+	   name="Ministerio de Trabajo"
+	   parent="hr.menu_hr_root"
+	   sequence="12"/>
+	
+
+        <menuitem action="wizard_csv_import" id="menu_wizard_csv_import" parent="menu_hr_payroll" />
+        <menuitem action="wizard_cash_payment" id="menu_wizard_cash" parent="menu_hr_payment_payroll"  />
+	<menuitem action="wizard_utilities" id="menu_utilities" parent="menu_hr_utilities" />
+
+	<menuitem action="action_wiz_adjust" id="menu_ajuste" parent="menu_sri" />
+	
+	<menuitem action="action_wiz_upwage" id="menu_upawage" parent="hr.menu_hr_root"  />
+	<menuitem action="action_wiz_account" id="menu_wiz_report" parent="hr.menu_hr_reporting" />
+	<menuitem action="action_hr_employee_util" id="menu_hr_utilidades" parent="menu_hr_utilities" />
+	<menuitem action="action_wiz_ministerio" id="menu_rmin_report" parent="menu_ministerio"  />
+	
+	</data>
+</openerp>

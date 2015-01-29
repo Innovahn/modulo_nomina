@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<openerp>
+  <data>
+    <!--
+	==================
+	Horas Extras View
+	==================
+      -->
+
+    <record id="hr_horas_ex_view_form" model="ir.ui.view">
+      <field name="name">hr.horas.extras.form</field>
+      <field name="model">hr.hora.extra.tipo</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+	<form string="Horas Extras">
+	  <field name="numero" select="1"/>
+	  <field name="percent" select="1"/>	  
+	  <field name="name" select="1"/>
+	</form>
+      </field>
+    </record>
+
+    <record id="action_hr_hextras" model="ir.actions.act_window">
+	<field name="name">Tipo de Horas Extra</field>
+	<field name="res_model">hr.hora.extra.tipo</field>
+	<field name="view_type">form</field>
+	<field name='view_mode'>form,tree</field>
+    </record>
+
+    <!--
+	====================
+	Complex view for HE
+	====================
+	-->
+    <record id="registro_horas_tree" model="ir.ui.view">
+      <field name="name">hr.registro.hora.tree</field>
+      <field name="model">hr.registro.hora</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree string="Registro Horas Extras" colors="blue:state=='draft'">
+		  <field name="departament_id" select="1"/>
+		  <field name="fecha_inicio" select="1"/>
+		  <field name="fecha_fin" select="1"/>
+		</tree>
+      </field>
+    </record>
+
+    <record id="view_extra_hour_form" model="ir.ui.view">
+      <field name="name">hr.registro.hora.form</field>
+      <field name="model">hr.registro.hora</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+	<form string="Registro de Horat">
+	  <group colspan="4" string="Información">
+	    <field name="name" readonly="1"/>
+	    <field name="departament_id" required="1" select="1"/>
+	    <field name="fecha_inicio" select="1"/>
+	    <field name="fecha_fin" select="1"/>
+	  </group>
+	  <group colspan="1" col="6">
+	    <separator colspan="3"/>
+	    <button name="cargar_empleados" states="draft" string="Cargar Empleados" type="object" icon="gtk-execute"/>
+	  </group>
+	  <separator string="Detalle de Horas por Empleado" colspan="4"/>
+	    <field name="registro_line" nolabel="1" colspan="4">
+	      <tree editable="bottom" string="Detalle">
+			<field name="employee_id"/>
+			<field name="hora_100"/>
+			<field name="hora_125"/>
+			<field name="hora_150"/>
+			<field name="hora_200"/>
+			<field name="falta_inj"/>
+			<field name="perm_medico"/>
+			<field name="justificativo"/>
+			<field name="cal_dom"/>
+			<field name="justifcd"/>
+			<field name="vacaciones"/>
+			<field name="feriado"/>
+			<field name="justif_feriado"/>
+			<field name="otros"/>
+	      </tree>
+	    </field>
+	    <group string="Validación" colspan="1" col="6">
+	    	<separator colspan="2"/>
+	    	<field name="state" select="1"/>
+	    	<button type="object" name="validar_registro" string="Validar"/> 
+	    </group>
+	</form>
+      </field>
+    </record>
+
+    <record id="action_registro_hora" model="ir.actions.act_window">
+      <field name="name">Registro Horas Semanal</field>
+      <field name="res_model">hr.registro.hora</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form,tree</field>
+    </record>
+
+    <record id="action_tree_registro" model="ir.actions.act_window">
+      <field name="name">Registro horas Semanal Borrador</field>
+      <field name="res_model">hr.registro.hora</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("state","=","draft")]</field>
+    </record>
+
+    <record id="action_tree_registro1" model="ir.actions.act_window">
+      <field name="name">Registro horas Semanal Procesadas</field>
+      <field name="res_model">hr.registro.hora</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("state","=","validate")]</field>
+    </record>
+
+    <!--
+	=========================
+	Tabla resumen de horas
+	=========================
+      -->
+      
+    <record id="resumen_horas_tree" model="ir.ui.view">
+      <field name="name">hr.resumen.hora.tree</field>
+      <field name="model">hr.resumen.hora.mensual</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree string="Resumen Horas Extras Mensual" colors="blue:state=='draft'">
+		  <field name="departament_id" select="1"/>
+		  <field name="periodo_id" select="1"/>
+		</tree>
+      </field>
+    </record>
+
+    <record id="action_resumen_hora" model="ir.actions.act_window">
+      <field name="name">Nuevo Resumen de Horas Mensual</field>
+      <field name="res_model">hr.resumen.hora.mensual</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form,tree</field>
+    </record>
+    
+    <record id="action_resumen_hora1" model="ir.actions.act_window">
+      <field name="name">Resumen Horas Mensual en Borrador</field>
+      <field name="res_model">hr.resumen.hora.mensual</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("state","=","draft")]</field>
+    </record>
+    
+    <record id="action_resumen_hora2" model="ir.actions.act_window">
+      <field name="name">Resumen Horas Mensual Procesadas</field>
+      <field name="res_model">hr.resumen.hora.mensual</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[("state","=","validate")]</field>
+    </record>
+    
+    <record id="view_resumen_hour_form" model="ir.ui.view">
+      <field name="name">hr.resumen.hora.mensual.form</field>
+      <field name="model">hr.resumen.hora.mensual</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+	<form string="Resumen de horas mensualkt"> 
+	  <group colspan="1" string="Información">
+	    <field name="name" readonly="1" select="1"/>
+	    <field name="departament_id" select="1" required="1"/>
+	    <field name="periodo_id" required="1" select="1"/>
+	  </group>
+	  <newline/>
+	  <group colspan="1" col="6">
+	    <separator colspan="3"/>
+	    <button type="object" name="cargar_empleados_resumen" string="Cargar" icon="gtk-execute"/>
+	  </group>
+	  <separator string="Detalle de Horas por Empleado" colspan="4"/>
+	    <field name="resumen_line" nolabel="1" colspan="4">
+	      <tree editable="bottom" string="Detalle">
+		<field name="employee_id" readonly="1"/>
+		<field name="hora_100"/>
+		<field name="hora_125"/>
+		<field name="hora_150"/>
+		<field name="hora_200"/>
+		<field name="falta_inj"/>
+		<field name="perm_medico"/>
+		<field name="cal_dom"/>
+		<field name="vacaciones"/>
+		<field name="feriado"/>
+		<field name="otros"/>
+		<field name="total" readonly="2"/>
+	      </tree>
+	    </field>
+	    <group string="Validación" colspan="1" col="6">
+	    	<separator colspan="2"/>
+	    	<field name="state" select="1"/>
+	    	<button type="object" name="validar_resumen" string="Validar"/> 
+	    </group>
+	</form>
+      </field>
+    </record>
+
+    <!-- groups="hr.group_hr_manager" TODOS ESTOS MENUS TENIAN ESTE groups-->
+    <menuitem id="extra_hours_management" name="Administración de Horas Extra" parent="hr.menu_hr_root" sequence="6"/>
+    <!-- Registro de Horas -->
+    <menuitem action="action_registro_hora" id="menu_registro_horas" parent="extra_hours_management" groups=""/>
+    <menuitem action="action_tree_registro" id="menu_registro_tree" parent="extra_hours_management" groups=""/>
+    <menuitem action="action_tree_registro1" id="menu_registro_tree1" parent="extra_hours_management" groups=""/>
+    <!-- Resumen de Horas -->
+    <menuitem action="action_resumen_hora" id="menu_resumen_horas" parent="extra_hours_management" groups=""/>
+	<menuitem action="action_resumen_hora1" id="menu_resumen_borrador" parent="extra_hours_management" groups=""/>
+	<menuitem action="action_resumen_hora2" id="menu_resumen_validate" parent="extra_hours_management" groups=""/>
+  </data>
+</openerp>

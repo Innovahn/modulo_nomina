@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+	<!-- 
+	=================
+	 HR Expense
+	================= 
+	-->	
+		<record model="ir.ui.view" id="view_hr_expense_form">
+			<field name="name">hr.expense.view.form</field>
+			<field name="model">hr.expense</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<!--	<form> -->
+					<group>
+						<field name="name" required="1" select="1"/>
+						<field name="employee_id" required="1" select="1"/>
+						<field name="period_id" select="1"/>
+						<field name="value" required="1"/>
+						<field name="account" required="1"/>
+					</group>
+			<!--	</form> -->
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_hr_expense_tree">
+			<field name="name">hr.expense.view.tree</field>
+			<field name="model">hr.expense</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Gastos">
+					<field name="employee_id" select="1"/>
+					<field name="name" select="1"/>
+					<field name="value" select="1"/>
+					<field name="state" select="1"/>
+					<field name="period_id" select="1"/>
+					<field name="account"/>
+				</tree>
+			</field>
+		</record>
+	
+	<!-- 
+	=================
+	 Control Hours
+	================= 
+	-->
+
+		<record model="ir.ui.view" id="view_hr_payroll_hours_form">
+			<field name="name">hr.payroll.hours.view.form</field>
+			<field name="model">hr.payroll.hours</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<separator string="Generalidades"/>
+				<form string="Reporte Semanal Horas Extras">
+					<!-- <separator string="Generalidades"/> -->
+					<field name="category_id" on_change="onchange_categories(category_id)" select="1"/>
+					<field name="date_start" select="1"/>
+					<field name="date_end" select="1"/>
+					<separator/>
+				</form>
+			</field>
+		</record>
+
+	<!-- 
+	=================
+	 Payroll Income
+	================= 
+	-->	
+		<record model="ir.ui.view" id="view_hr_income_tree">
+			<field name="name">hr.income.view.tree</field>
+			<field name="model">hr.income</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Ingresos de Empleado">
+					<field name="employee_id" select="1"/>
+					<field name="name" select="1"/>
+					<field name="value" select="1"/>
+					<field name="period_id" select="1"/>
+					<field name="payroll_id" select="1"/>
+					<field name="account"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_hr_income_form">
+			<field name="name">hr.income.view.form</field>
+			<field name="model">hr.income</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Ingresos de Empleado">
+					<group string="Ingresos de Empleado">
+						<field name="name" required="1"/>
+						<field name="employee_id" required="1" select="1"/>
+						<field name="value" required="1"/>
+						<field name="period_id" select="1"/>
+						<field name="payroll_id" select="1"/>
+						<field name="account" required="1"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+	<!-- 
+	=================
+	 Payroll Expense
+	================= 
+	-->	
+		<record model="ir.ui.view" id="view_hr_expense_form">
+			<field name="name">hr.expense.view.form</field>
+			<field name="model">hr.expense</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Egresos de Empleado">
+					<group string="Egreso de Empleado">
+						<field name="name" required="1" select="1"/>
+						<field name="employee_id" required="1" select="1"/>
+						<field name="period_id" select="1"/>
+						<field name="value" required="1"/>
+						<field name="payroll_id" select="1"/>
+						<field name="account"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_hr_expense_tree">
+			<field name="name">hr.expense.view.tree</field>
+			<field name="model">hr.expense</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<separator string="Informacion de Egreso"/>
+				<tree string="Egresos de Empleado">
+					<!-- <separator string="Informacion de Egreso"/> -->
+					<field name="employee_id" select="1"/>
+					<field name="name" select="1"/>
+					<field name="value" select="1"/>
+					<field name="state" select="1"/>
+					<field name="date" select="1"/>
+					<field name="period_id"/>
+					<field name="account"/>
+				</tree>
+			</field>
+		</record>
+	
+	<!--
+	=================
+	 Payroll Tree
+	=================
+	 -->
+	 
+	 	<record model="ir.ui.view" id="view_hr_payroll_tree">
+	 		<field name="name">hr.payroll.view.tree</field>
+	 		<field name="model">hr.payroll</field>
+	 		<field name="type">tree</field>
+	 		<field name="arch" type="xml">
+	 			<tree string="Rol de Pagos" colors="blue:state=='draft'">
+	 				<field name="employee_id" select="1"/>
+	 				<field name="contract_id" select="1"/>
+	 				<field name="period_id" select="1"/>
+					<field name="state" select="1"/>
+	 			</tree>
+	 		</field>
+	 	</record>
+
+
+	<!--
+	=================
+	 Payroll Form
+	=================
+	 -->
+	 
+	 	<record model="ir.ui.view" id="view_hr_payroll_form">
+	 		<field name="name">hr.payroll.view.form</field>
+	 		<field name="model">hr.payroll</field>
+	 		<field name="type">form</field>
+	 		<field name="arch" type="xml">
+	 			<form string="Rol de Pagos">
+		 			<group string="Información" col="6" colspan="4">
+		 			  <field name="employee_id" required="1" select="1"/>
+		 			  <field name="contract_id" required="1" select="1" domain="[('employee_id','=',employee_id)]"/>
+		 			  <field name="period_id" required="1"/>
+		 			  <field name="num_dias" select="1"/>
+					  <field name="state" /> 
+	 				</group>
+	 				<group string="Validación" col="6" colspan="4">
+		 			  <field name="user_id" required="1" readonly="1" select="1"/>
+		 			  <field name="date" select="1" readonly="1"/>
+					  <button type="object" name="load_info" states="draft" string="Cargar Info" icon="gtk-execute"/>
+	 				</group>
+					<notebook colspan="4">
+					    <page string="Ingresos">
+					      <field name="incomes_ids" colspan="4" nolabel="1">
+							<tree string="Ingresos del Empleado">
+							  <field name="name"/>
+							  <field name="value"/>
+							  <field name="period_id"/>
+							</tree>						 
+					      </field>						
+					    </page>
+					    <page string="Egresos">
+					      <field name="expenses_ids" colspan="4" nolabel="1">
+							<tree string="Egresos del Empleado">
+							  <field name="name"/>
+							  <field name="value"/>
+							  <field name="period_id"/>
+							</tree>
+					      </field>
+					    </page>
+					    <page string="Horas Extra">
+							<field name="horas_resumen" nolabel="1" colspan="4" >
+						        <!--  <field name="horas_resumen" nolabel="1" colspan="4" editable="False"> -->
+								<tree string="Resumen de Horas">
+									<field name="hora_100"/>
+									<field name="hora_125"/>
+									<field name="hora_150"/>
+									<field name="hora_200"/>
+									<field name="falta_inj"/>
+									<field name="perm_medico"/>
+									<field name="cal_dom"/>
+									<field name="vacaciones"/>
+									<field name="feriado"/>
+									<field name="otros"/>
+									<field name="total"/>
+								</tree>
+							</field>
+							<group string="Costo Total de Horas" col="6" colspan="4">
+							  <field name="total_horas125" colspan="1"/>
+							  <field name="total_horas150"/>
+							  <field name="total_horas200"/>
+							</group>
+					    </page>
+					    <page string="Provisiones">
+					    	<field name="provisiones_id" nolabel="1" colspan="4">
+						    	<tree string="Provisiones">
+						    		<field name="decimo3ro"/>
+						    		<field name="decimo4to"/>
+						    		<field name="vacaciones"/>
+						    		<field name="fondo_reserva"/>
+						    		<field name="aporte_patronal"/>
+						    		<field name="secap"/>
+						    		<field name="iece"/>
+						    		<field name="total"/>
+						    	</tree>
+					    	</field>
+					    </page>
+					</notebook>
+					<group string="Acciones" col="2" colspan="2">
+					  <button type="object" name="liquidar_vacaciones" string="Liquidar Vacaciones" states="draft"/>
+					  <button type="object" name="compute_values" string="Calcular" states="draft"/>
+					  <button type="object" name="validar_registro" string="Validar" states="draft"/>
+					</group>
+					<group col="2" colspan="2">
+					  <field name="liq_vacaciones" readonly="1"/>
+					  <field name="total_ingresos" readonly="1"/>
+					  <field name="total_egresos" readonly="1"/>
+					  <field name="total" readonly="1"/>
+<!--					  <field name="state" select="1"/> -->
+					</group>
+	 			</form>
+	 		</field>
+	 	</record>
+	 	
+ 	<!--
+ 	=================
+ 	Action hr.expense
+ 	================= 
+ 	 -->
+		<record id="action_hr_expense" model="ir.actions.act_window">
+			<field name="name">Egresos en Borrador</field>
+			<field name="res_model">hr.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[("state","=","draft")]</field>
+	 	</record>
+
+		<record id="action_hr_income" model="ir.actions.act_window">
+			<field name="name">Ingresos en Borrador</field>
+			<field name="res_model">hr.income</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[("name","=","draft")]</field>
+	 	</record>
+	 	
+	 	<record id="action_pago_coop" model="ir.actions.act_window">
+	 		<field name="name">Consultar Pagos Cooperativa</field>
+ 			<field name="res_model">hr.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[("name","=","Pago Cooperativa")]</field>
+	 	</record>
+
+	 	<record id="action_pago_comida" model="ir.actions.act_window">
+	 		<field name="name">Consultar Pagos Comida</field>
+ 			<field name="res_model">hr.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[("name","=","Pago Comida")]</field>
+	 	</record>	
+
+ 	<!--
+ 	=================
+ 	Action hr.payroll
+ 	================= 
+ 	 -->
+ 	 
+ 	 	<record id="action_hr_payroll" model="ir.actions.act_window">
+ 	 		<field name="name">Rol de Pagos</field>
+ 	 		<field name="res_model">hr.payroll</field>
+ 	 		<field name="view_type">form</field>
+ 	 		<field name="view_mode">form,tree</field>
+ 	 	</record>
+
+ 	 	<record id="action_hr_payroll_draft" model="ir.actions.act_window">
+		  <field name="name">Rol de Pagos Borrador</field>
+		  <field name="res_model">hr.payroll</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		  <field name="domain">[("state","=","draft")]</field>
+		</record>
+
+		<record id="action_hr_payroll_validate" model="ir.actions.act_window">
+		  <field name="name">Rol de Pagos Validados</field>
+		  <field name="res_model">hr.payroll</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		  <field name="domain">[("state","=","validate")]</field>
+		</record>
+
+        <menuitem 
+            id="menu_hr_payroll" 
+            name="Rol de Pagos" 
+            parent="hr.menu_hr_root"
+	    sequence="6"/>
+    
+<!--	<menuitem 
+            id="menu_hr_payroll" 
+            name="Rol de Pagos" 
+            parent="hr.menu_hr_root"
+	    groups="hr.group_hr_manager" 
+            sequence="6"/> -->
+        <menuitem
+        	id="menu_hr_payment_payroll"
+       		name="Pagos con Cash"
+    		parent="hr.menu_hr_root"
+    		sequence="9"/> 
+
+
+       <!--  <menuitem
+        	id="menu_hr_payment_payroll"
+       		name="Pagos con Cash"
+    		parent="hr.menu_hr_root"
+    		groups="hr.group_hr_manager"
+    		sequence="9"/> 
+-->
+		<menuitem action="action_pago_coop" id="hr_coop_expense" parent="menu_hr_payroll"  sequence="2"/>
+		<menuitem action="action_pago_comida" id="hr_menu_comida" parent="menu_hr_payroll"  sequence="3"/>
+ 	 	<menuitem action="action_hr_payroll" id="hr_menu_payroll" parent="menu_hr_payroll"  sequence="1"/>
+		<menuitem action="action_hr_payroll_draft" id="hr_payroll_draft" parent="menu_hr_payroll" sequence="1"/>
+		<menuitem action="action_hr_payroll_validate" id="hr_payroll_validate" parent="menu_hr_payroll"  sequence="1"/>
+ 	 	<menuitem action="action_hr_expense" id="hr_menu_expense" parent="menu_hr_payroll" />
+		<menuitem action="action_hr_income" id="hr_menu_income" parent="menu_hr_payroll" />
+
+	</data>
+</openerp>

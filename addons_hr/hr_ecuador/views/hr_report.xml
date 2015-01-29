@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <report id="report_hr_payroll"
+                string="Imprimir Nomina"
+                model="hr.payroll"
+                name="hr.payroll"
+                rml="hr_ecuador/report/payroll_report.rml"
+                auto="False"
+                header="False"/>
+				
+         <report id="hr_horas_extra_report"
+           string="Imprimir Reporte"
+           model="hr.resumen.hora.mensual"
+           name="hr.resumen.hora.mensual"
+           rml="hr_payroll/report/horas_report.rml"
+           auto="False"
+           header="False"/>		
+	</data>
+</openerp>

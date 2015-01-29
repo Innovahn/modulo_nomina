@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	<!-- 
+	==========================
+	Employee Category Modified
+	========================== 
+	-->
+
+	<record model="ir.ui.view" id="view_employee_cat_form">
+	  <field name="name">hr.employee.category.form</field>
+	  <field name="model">hr.employee.category</field>
+	  <field name="type">form</field>
+	  <field name="inherit_id" ref="hr.view_employee_category_form"/>
+	  <field name="arch" type="xml">
+	    <field name="name" position="after">
+	        <field name="code"/>
+	    </field>
+	  </field>
+	</record>
+
+	
+	<!-- 
+	=================
+	Employee Modified
+	================= 
+	-->
+	
+        <record model="ir.ui.view" id="view_employee_ec_form">
+            <field name="name">hr.employee.ec.form</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="cedula" on_change="onchange_cedula(cedula)" required="1" select="1"/>
+		    <field name="tipoid" required="1"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_employee_ec_form1">
+        	<field name="name">hr.employee.ec.form1</field>
+        	<field name="model">hr.employee</field>
+        	<field name="type">form</field>
+        	<field name="inherit_id" ref="hr.view_employee_form"/>
+        	<field name="arch" type="xml">
+        		<notebook position="inside">
+        			<page string="Informacion Familiar">
+				  <group string="Costo Total de Horas" col="6" colspan="4">
+        				<field name="seguro_priv"/>
+        				<field name="total_seguro"/>
+					<field name="children" string="Hijos menores de 18"/>
+				  </group>
+        				<field colspan="4" name="cargas_ids" nolabel="1">
+        					<tree string="Carga Familiar">
+        						<field name="name"/>
+          						<field name="birth"/>
+        						<field name="age"/>
+        						<field name="asegurado"/>
+        					</tree>
+        				</field>
+        			</page>
+				<page string="Info Utilidades">
+				  <field colspan="4" name="utilidades_ids" nolabel="1">
+				    <tree string="Registro Utlidades">
+				      <field name="name"/>
+				      <field name="val5"/>
+				      <field name="val10"/>
+				      <field name="total"/>
+				    </tree>
+				  </field>
+				</page>
+        		</notebook>
+        	</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_employee_ec_form2">
+            <field name="name">hr.employee.ec.form2</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="address_home_id" position="replace">
+                    <field name='address'/>
+                </field>
+            </field>
+        </record>
+
+       <!-- <record model="ir.ui.view" id="view_employee_ec_form3">
+            <field name="name">hr.employee.ec.form3</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <page string="Miscelleanous" position="replace"/> 
+            </field>
+        </record>
+        -->
+        <record model="ir.ui.view" id="view_employee_ec_form4">
+            <field name="name">hr.employee.ec.form4</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                	<field name="tipo" required="1"/>
+			<field name="bank_account_id"/>
+			<field name="help_trans"/>
+                </field>
+            </field>
+        </record>
+        
+		<!-- COMENTADO POR CAMPO contract_ids -->
+		<record model="ir.ui.view" id="view_employee_ec_form5">
+		  <field name="name">hr.employee.ec.form5</field>
+		  <field name="model">hr.employee</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="hr.view_employee_form"/>
+		  <field name="arch" type="xml">
+		    <field name="category_ids" position="after">
+		      <newline/>
+		      <separator string="Vacaciones"/>
+		      <newline/>
+		      <field name="dias_vacaciones"/>
+		    </field>
+		  </field>
+		</record> 
+
+		<record model="ir.ui.view" id="view_employee_ec_form8">
+		  <field name="name">hr.employee.ec.form8</field>
+		  <field name="model">hr.employee</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="hr.view_employee_form"/>
+		  <field name="arch" type="xml">
+		    <field name="company_id" position="replace">
+		      <field name="company_id" readonly="1"/>
+		    </field>
+		  </field>
+		</record>
+
+		<record model="ir.ui.view" id="view_employee_ec_form9">
+		  <field name="name">hr.employee.ec.form9</field>
+		  <field name="model">hr.employee</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="hr.view_employee_form"/>
+		  <field name="arch" type="xml">
+		    <field name="address_id" position="replace">
+		      <field name="dir_trabajo" readonly="1"/>
+		    </field>
+		  </field>
+		</record>
+		
+	<!--	COMENTADO POR CAMPO contract_ids-->
+		<record model="ir.ui.view" id="view_employee_ec_form6">
+		  <field name="name">hr.employee.ec.form6</field>
+		  <field name="model">hr.employee</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="hr.view_employee_form"/>
+		  <field name="arch" type="xml">
+		    <field name="category_ids" position="replace">
+		      <field name="category_ids" select="1" required="1"/>
+		    </field>
+		  </field>
+		</record>		
+		
+	<!-- COMENTADO POR CAMPO conTract_ids NO SE ENCUENTRA 	-->
+	<record model="ir.ui.view" id="view_employee_ec_form7">
+			<field name="name">hr.employee.ec.form7</field>
+			<field name="model">hr.employee</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="category_ids" position="after">
+					<field colspan="4" name="contract_ids" nolabel="1">
+						<tree string="Contractos">
+							<field name="name"/>
+						<!--	<field name="function"/> -->
+							<field name="date_start"/>
+							<field name="date_end"/>
+							<field name="wage"/>
+							<field name="iess"/>
+							<field name="impuesto_renta"/>
+							<field name="fraccion_mensual"/>
+						</tree>
+					</field>
+				</field>
+			</field>
+		</record>
+
+		<record id="view_hr_employee_bank_form" model="ir.ui.view">
+		  <field name="name">hr.employee.bank.form</field>
+		  <field name="model">hr.employee.bank</field>
+		  <field name="type">form</field>
+		  <field name="arch" type="xml">
+		    <form string="Cta. Bancaria">
+		      <field name="name" select="1"/>
+		      <field name="type" select="1" required="1"/>
+		      <field name="res_bank_id" required="1" select="1"/>
+		    </form>
+		  </field>
+		</record>
+
+		<record id="view_hr_utils_form" model="ir.ui.view">
+		  <field name="name">hr.employee.util.form</field>
+		  <field name="model">hr.employee.util</field>
+		  <field name="type">form</field>
+		  <field name="arch" type="xml">
+		    <form string="Utilidades por Empleados">
+		      <field name="employee_id" select="1"/>
+		      <field name="val10" select="1"/>
+		      <field name="val5" select="1"/>
+		      <field name="total" select="1"/>
+		    </form>
+		  </field>
+		</record>
+
+		<record id="action_hr_employee_util" model="ir.actions.act_window">
+		  <field name="name">Utilidades de Empleados</field>
+		  <field name="res_model">hr.employee.util</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+    
+	</data>
+</openerp>

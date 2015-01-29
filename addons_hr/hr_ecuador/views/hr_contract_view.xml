@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	<!-- 
+	=================
+	Contract Modified
+	================= 
+-->
+
+	<record model="ir.ui.view" id="view_hr_contract_type_form">
+	  <field name="name">hr.contract.type.form</field>
+	  <field name="model">hr.contract.type</field>
+	  <field name="type">form</field>
+	  <field name="arch" type="xml">
+	    <form string="Tipo de Contratos">
+	      <field name="name" required="1"/>
+	      <field name="description" required="1"/>
+	    </form>
+	  </field>
+	</record>
+
+	<record model="ir.ui.view" id="view_hr_contract_type_tree">
+	  <field name="name">hr.contract.type.tree</field>
+	  <field name="model">hr.contract.type</field>
+	  <field name="type">tree</field>
+	  <field name="arch" type="xml">
+	    <tree string="Tipo de Contratos">
+	      <field name="name" required="1" select="1"/>
+	      <field name="description"/>
+	    </tree>
+	  </field>
+	</record>	
+
+	<record id="action_hr_contract_type_h" model="ir.actions.act_window">
+	  <field name="name">Tipo de Contratos</field>
+	  <field name="res_model">hr.contract.type</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form</field>
+	</record>
+
+        <record model="ir.ui.view" id="view_contract_ec_form10">
+            <field name="name">hr.contract.ec.form</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="wage" position="after">
+                	<field name="iess" required='1'/>
+                	<field name="impuesto_renta"/>
+			<field name="help_food"/>
+			<field name="costo_hora"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_contract_ec_form">
+            <field name="name">hr.contract.ec.form1</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="notes" position="replace">
+			<field name="wage_line" colspan="4" nolabel="4">
+			  <tree string="Historial de Salario">
+			    <field name="name"/>
+			    <field name="wage"/>
+			  </tree>
+			</field>
+                </field>
+            </field>
+        </record>
+  
+        <record model='ir.ui.view' id='view_contract_ec_form1'>
+        	<field name='name'>hr.contract.ec.form2</field>
+        	<field name='model'>hr.contract</field>
+        	<field name='type'>form</field>
+        	<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        	<field name='arch' type='xml'>
+        		<field name="wage" position="after">
+        			<field name="sueldo_basico" required='1'/>
+        			<field name="proyeccion"/>
+				<field name="proy_salud"/>
+				<field name="proy_vivienda"/>
+				<field name="proy_alimentacion"/>
+				<field name="proy_vestimenta"/>
+        		</field>
+        	</field>
+        </record>
+        
+        <record model='ir.ui.view' id='view_contract_ec_form3'>
+        	<field name='name'>hr.contract.ec.form</field>
+        	<field name='model'>hr.contract</field>
+        	<field name='type'>form</field>
+        	<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        	<field name='arch' type='xml'>
+        		<field name="wage" position="replace">
+        			<field name="wage" required='1' on_change="onchange_wage(wage)" context="{'wage':wage}"/>
+        			<newline/>
+        		</field>
+        	</field>
+        </record>        
+
+        <record model="ir.ui.view" id="view_contract_ec_form4">
+        	<field name="name">hr.contract.ec.form</field>
+        	<field name='model'>hr.contract</field>
+        	<field name='type'>form</field>
+        	<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        	<field name='arch' type='xml'>
+        		<field name="name" position="replace">
+			  <field name="name" readonly="1"/>
+			</field>			 
+        	</field>
+        </record>        
+
+
+        <record model='ir.ui.view' id='view_contract_ec_form5'>
+        	<field name='name'>hr.contract.ec.form5</field>
+        	<field name='model'>hr.contract</field>
+        	<field name='type'>form</field>
+        	<field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        	<field name='arch' type='xml'>
+		  <field name="employee_id" position="before">
+        	    <field name="nombre" required='1' on_change="onchange_name(nombre, date_start)" context="{'nombre':nombre, 'date_start' : date_start}"/>
+		  </field>
+		</field>
+	</record>
+
+
+	<!--
+	====================
+	Tabla de Retenciones
+	====================
+	-->
+        
+
+	<record model="ir.ui.view" id="view_base_retention_form">
+	  <field name="name">hr.base.retencion.form</field>
+	  <field name="model">hr.base.retention</field>
+	  <field name="type">form</field>
+	  <field name="arch" type="xml">
+	    <form string="Tabla Base de Retención">
+	      <field name="name" required="1" select="1"/>
+	      <field name="year" required="1" select="1"/>
+	      <field name="retention_line" nolabel="1" colspan="4">
+		<tree editable="bottom" string="Detalle">
+		  <field name="fraccion_basica"/>
+		  <field name="exceso_hasta"/>
+		  <field name="frac_basica_tax"/>
+		  <field name="percent"/>
+		</tree>
+	      </field>
+	     </form>
+	  </field>
+	</record>
+
+	<record model='ir.ui.view' id='view_base_retention_tree'>
+	  <field name='name'>hr.base.retention.view.tree</field>
+	  <field name='model'>hr.base.retention</field>
+	  <field name='type'>tree</field>
+	  <field name='arch' type='xml'>
+	    <tree string="Base de Retencion">
+	      <field name='name' select='1'/>
+	      <field name='year' select='1'/>
+	    </tree>
+	  </field>
+	</record>
+
+	<record id="action_hr_base_retention" model="ir.actions.act_window">
+	  <field name="name">Tabla base de Retención</field>
+	  <field name="res_model">hr.base.retention</field>
+	  <field name="view_type">form</field>
+	  <field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem action="action_hr_contract_type_h"
+		  id="hr_contract_type_action"
+		  parent="hr.menu_hr_configuration"
+		  />
+	
+	<menuitem action="action_hr_base_retention" 
+		  id="hr_menu_base_retention" 
+		  parent="hr.menu_hr_configuration" 
+		  />
+
+	</data>
+</openerp>
