@@ -14,7 +14,7 @@
 
         <record id="wizard_csv_import" model="ir.actions.wizard">
             <field name="name">Importar Archivos de Egresos</field>
-            <field name="wiz_name">wizard.load.csv</field>
+            <field name="wiz_name">wizard.import.csv</field>
         </record>
         
         <record id="wizard_cash_payment" model="ir.actions.wizard">
@@ -27,9 +27,12 @@
 	  <field name="wiz_name">wizard.utilities</field>
 	</record>
 <!--
-	<record id="wizard_account_report" model="ir.ui.view">
-	  <field name="name">Exportar Archivos para Contabilidad</field>
-	  <field name="model">wizard.account.report</field>
+	<record id="wizard_account_report" model="ir.actions.wizard">
+	 <record id="wizard_account_report" model="ir.ui.view">
+	 <field name="name">wizard.account.report.form</field>
+	 <field name="name">Exportar Archivos para Contabilidad</field>
+	 <field name="model">wizard.account.report</field>
+	  <field name="wiz_name">wizard.account.report</field>
 	  <field name="type">form</field>
 	  <field name="arch" type="xml">
 	    <form string="Exportar Archivos">
@@ -39,7 +42,7 @@
 	      </group>
 	      <group col="1" fill="0" states="get">
 		<separator colspan="2" string="Guardar Archivo Nomina"/>
-		<field name="file_ac" readonly="1"/>
+	-	<field name="file_ac" readonly="1"/> 
 		<separator colspan="2" string="Guardar Archivo Provisiones"/>
 		<field name="file_prov" readonly="1"/>
 	      </group>

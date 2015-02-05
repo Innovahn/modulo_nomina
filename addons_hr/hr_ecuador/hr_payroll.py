@@ -43,30 +43,48 @@ class hr_payroll(osv.osv):
         imp_r = payroll.contract_id.impuesto_renta / divi
         ayudat = payroll.employee_id.help_trans
         res=self.read(cr, uid, ids)[0]
+	print "$id_rol-----------"
+	print id_rol
+	print "$"*45
         #egresos
         egresos = self.pool.get('hr.expense')
         ingresos = self.pool.get('hr.income')
         res_ex = egresos.search(cr, uid, [('payroll_id','=',id_rol)])
         res_in = ingresos.search(cr, uid, [('payroll_id','=',id_rol)])
+	print "#"*40+"ingresos"
+	print res_in
+	print "#"*40+"egresos"
+	print res_ex
+	print "#"*40
+
         if not res_in and not res_ex:
             ids2 = self.pool.get('hr.expense').search(cr, uid, [('employee_id','=',res['employee_id'][0]), ('period_id','=',res['period_id'][0])])
-            if ids2:
+	    print "if not res_in"
+	    print "ids2-este trae hr.expense de este empleado con este periodo---------------------------"
+	    print ids2	
+	    print "#"*45
+            if not ids2: #si tiene agresos (hr.expense son los egresos)
+		
                 egresos.write(cr, uid, ids2, {'payroll_id':id_rol})
-            egresos.create(cr, uid, {'payroll_id':res['id'], 'employee_id':res['employee_id'][0], 'value':imp_r, 'name': 'Retencion Impuesto',
-                                     'period_id' : res['period_id'][0]})
-            egresos.create(cr, uid, {'payroll_id':res['id'], 'employee_id':res['employee_id'][0], 'value':ayudat, 'name':'Ayuda Transporte', 
-                                     'period_id' : res['period_id'][0]})
-            #ingresos
-            valor100 = payroll.contract_id.wage
-            ingresos.create(cr, uid, {'name':'Tiempo Ordinario','employee_id': res['employee_id'][0], 
+            	egresos.create(cr, uid, {'payroll_id':res['id'], 'employee_id':res['employee_id'][0], 'value':imp_r, 'name':'Retencion Impuesto','period_id' : res['period_id'][0]})
+            	egresos.create(cr, uid, {'payroll_id':res['id'], 'employee_id':res['employee_id'][0], 'value':ayudat, 'name':'Ayuda Transporte','period_id' : res['period_id'][0]})
+                #ingresos
+            	valor100 = payroll.contract_id.wage
+            	ingresos.create(cr, uid, {'name':'Tiempo Ordinario','employee_id': res['employee_id'][0], 
                                       'value':valor100, 'payroll_id' : res['id'], 'period_id' : res['period_id'][0]})
-            ingresos.create(cr, uid, {'name':'Ayuda Alimenticia','employee_id' : res['employee_id'][0], 'value' : payroll.contract_id.help_food, 
+            	ingresos.create(cr, uid, {'name':'Ayuda Alimenticia','employee_id' : res['employee_id'][0], 'value' : payroll.contract_id.help_food, 
                                      'payroll_id' : res['id'], 'period_id' : res['period_id'][0]})
-            ingresos.create(cr, uid, {'name' : 'Ayuda Transporte', 'employee_id' : res['employee_id'][0], 'value' : payroll.employee_id.help_trans,
+            	ingresos.create(cr, uid, {'name' : 'Ayuda Transporte', 'employee_id' : res['employee_id'][0], 'value' : payroll.employee_id.help_trans,
                                       'payroll_id' : res['id'], 'period_id' : res['period_id'][0]})
-            ingresos = self.pool.get('hr.income')
-            ids4 = self.pool.get('hr.income').search(cr, uid, [('employee_id','=',res['employee_id'][0]),('name','like','Hora Extra')])
+            	ingresos = self.pool.get('hr.income')
+            ids4 = self.pool.get('hr.income').search(cr, uid, [('employee_id','=',res['employee_id'][0]),('name','ilike','Hora Extra')])
+	    print "ids4-- trae los ingresos de este empleado------------------------"
+	    print ids4
+	    print "Employee id"
+	    print res['employee_id'][0]
+	    print "$"*65
             if ids4:
+		print "entro ids4"
                 horas = self.pool.get('hr.income').browse(cr, uid, ids4)
                 for item in horas:
                     self.pool.get('hr.income').write(cr, uid, {'payroll_id' : res['id']})
@@ -133,19 +151,26 @@ class hr_payroll(osv.osv):
         expenses = self.pool.get('hr.expense').read(cr, uid, ex_ids)
         temp = 0
         proll = self.browse(cr, uid, ids)[0]
-        h25 = payroll['total_horas125'] / (proll.contract_id.costo_hora * 1.25)
-        h50 = payroll['total_horas150'] / (proll.contract_id.costo_hora * 1.50)
-        h100 = payroll['total_horas200'] / (proll.contract_id.costo_hora * 2)
-        ingresos = self.pool.get('hr.income')
-        ids2 = ingresos.search(cr, uid, [('name','like','H Ext%'), ('payroll_id', '=', payroll['id'])])
-        if ids2 == []:
-            ingresos.create(cr, uid, {'name' : 'H Ext 25%'+'\t'+'('+str('%.2f'%h25)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas125'], 
+	print "#"*60
+	print proll.contract_id.costo_hora
+	print "#"*60
+	result={}
+	if proll.contract_id.costo_hora==False:
+		 raise osv.except_osv("Informacion",'Porfavor verifique que Valor Hora 100% en el contrato este establecida!')
+	if proll.contract_id.costo_hora:
+	        h25 = payroll['total_horas125'] / (proll.contract_id.costo_hora * 1.25)
+        	h50 = payroll['total_horas150'] / (proll.contract_id.costo_hora * 1.50)
+	        h100 = payroll['total_horas200'] / (proll.contract_id.costo_hora * 2)
+        	ingresos = self.pool.get('hr.income')
+        	ids2 = ingresos.search(cr, uid, [('name','like','H Ext%'), ('payroll_id', '=', payroll['id'])])
+        	if ids2 == []:
+            		ingresos.create(cr, uid, {'name' : 'H Ext 25%'+'\t'+'('+str('%.2f'%h25)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas125'], 
                                       'payroll_id':payroll['id'], 'period_id' : payroll['period_id'][0]})
 
-            ingresos.create(cr, uid, {'name' : 'H Ext 50%'+'\t'+'('+str('%.2f'%h50)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas150'], 
+     		ingresos.create(cr, uid, {'name' : 'H Ext 50%'+'\t'+'('+str('%.2f'%h50)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas150'], 
                                       'payroll_id':payroll['id'], 'period_id' : payroll['period_id'][0]})
 
-            ingresos.create(cr, uid, {'name' : 'H Ext 100%'+'\t'+'('+str('%.2f'%h100)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas200'], 
+            	ingresos.create(cr, uid, {'name' : 'H Ext 100%'+'\t'+'('+str('%.2f'%h100)+')', 'employee_id' : payroll['employee_id'][0], 'value' : payroll['total_horas200'], 
                                       'payroll_id':payroll['id'], 'period_id' : payroll['period_id'][0]})
 
         for income in incomes:
@@ -264,9 +289,7 @@ class hr_expense(osv.osv):
         'account' : fields.char('Cta. Contable', size = 40),
         }
 
-    _sql_constraints=[
-        ('name','unique(name)','El pago por mes es único.'),
-        ]
+   # _sql_constraints=[('name','unique(name)','El pago por mes es único.'),]
     
     _defaults={
         'state' : lambda *a: 'draft',

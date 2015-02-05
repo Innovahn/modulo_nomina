@@ -41,6 +41,7 @@
 		  <field name="departament_id" select="1"/>
 		  <field name="fecha_inicio" select="1"/>
 		  <field name="fecha_fin" select="1"/>
+		  <field name="state" select="1" />
 		</tree>
       </field>
     </record>

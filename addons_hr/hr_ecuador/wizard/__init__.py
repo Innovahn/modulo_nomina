@@ -29,3 +29,8 @@ import wizard_export_rdep
 import wizard_reports
 import wizard_adjust_rdep
 import wizard_update_wage
+import wizard_account_report
+import wizard_holidays_pay
+import wizard_import_food
+import wizard_reports
+

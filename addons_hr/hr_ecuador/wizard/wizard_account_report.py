@@ -22,7 +22,8 @@
 ##############################################################################
 
 
-import wizard
+#import wizard
+from openerp.osv import osv,fields
 import base64
 import StringIO
 import csv
@@ -61,7 +62,9 @@ view_form_finish="""<?xml version="1.0"?>
 </form>"""
 
 
-class wizard_account_report(wizard.interface):
+class wizard_account_report(osv.osv_memory):
+    _name="wizard.account.report"
+
     def crear_archivos(self, cr, uid, data, context):
         form = data['form']
         periodo = form['period_id']
@@ -110,4 +113,4 @@ class wizard_account_report(wizard.interface):
                 }
           },
         }
-wizard_account_report('wizard.account.report')
+wizard_account_report()

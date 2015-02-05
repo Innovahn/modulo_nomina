@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-import wizard
+from openerp.osv import osv,fields
 import pooler
 import time
 import base64
@@ -67,8 +67,9 @@ fields_form={
         'data':{'string':'Archivo', 'type':'binary', 'required':True,},
         }
 
-class wizard_import_food(wizard.interface):
-    
+class wizard_import_food(osv.osv_memory):
+    _name="wizard.import.food"    
+
     def _process_message(self, cr, uid, data, context):
         return {
             'no_cedulas' : '\n'.join(noced),
@@ -126,4 +127,4 @@ class wizard_import_food(wizard.interface):
             },
         }
     
-wizard_import_food('wizard.import.food')
+wizard_import_food()

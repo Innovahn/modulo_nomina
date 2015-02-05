@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-import wizard
+from openerp.osv import fields,osv
 
 view_form="""<?xml version="1.0"?>
 <form string="">
@@ -33,7 +33,9 @@ view_form="""<?xml version="1.0"?>
     </group>
 </form>"""
 
-class wizard_holidays_pay(wizard.interface):
+class wizard_holidays_pay(osv.osv_memory):
+	_name="wizard.holidays.pay"
+
         states={
         }
-wizard_holidays_pay('wizard.holidays.pay')
+wizard_holidays_pay()

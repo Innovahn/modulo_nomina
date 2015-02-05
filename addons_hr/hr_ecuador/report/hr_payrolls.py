@@ -23,7 +23,7 @@
 
 import time
 import pooler
-from report import report_sxw
+from openerp.report import report_sxw
 
 UNIDADES = ('','UN ','DOS ','TRES ','CUATRO ','CINCO ','SEIS ','SIETE ','OCHO ','NUEVE ','DIEZ ','ONCE ','DOCE ','TRECE ','CATORCE ','QUINCE ',   'DIECISEIS ', 'DIECISIETE ',
 	    'DIECIOCHO ', 'DIECINUEVE ', 'VEINTE ')
@@ -90,8 +90,9 @@ def __convertNumber(n):
 
     return output
 
-class payroll_report(report_sxw.rml_parse):
-
+class hr_payrolls(report_sxw.rml_parse):
+    
+    inherit='hr.payroll'
     def _num_let(self, rol, form):
         pe = int(rol.total)
 	dec = rol.total - pe
@@ -100,10 +101,13 @@ class payroll_report(report_sxw.rml_parse):
 	return letras + ',' + str(dec)[2:4]+'/'+'100******'
 
     def __init__(self, cr, uid, name, context):
-        super(payroll_report,self).__init__(cr, uid, name, context)
+        super(hr_payrolls,self).__init__(cr, uid, name, context)
         self.localcontext.update({'time' : time, 'num_let' : self._num_let })
         self.context = context
 	
-	report_sxw.report_sxw('report.hr.payroll', 'hr.payroll', "addons_hr/hr_ecuador/report/hr_payroll.rml", parser=payroll_report,header=False)
-#report_sxw.report_sxw('report.hr.payroll', 'hr.payroll', "addons/hr_ecuador/report/payroll_report.rml", parser=hr_payroll,header=False)
-#	report_sxw.report_sxw('report.hr.payroll', 'hr.payroll', "addons/hr_ecuador/report/payroll_report.rml", parser=payroll_report,header=False)
+	report_sxw.report_sxw(
+		'report.hrpayroll',
+		'hr.payroll',
+		'addons/hr_ecuador/report/hr_payroll.rml', 
+		parser=hr_payrolls,
+		header=False)

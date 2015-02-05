@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-        <report id="report_hr_payroll"
+        <report id="reporthrpayroll"
                 string="Imprimir Nomina"
                 model="hr.payroll"
-                name="hr.payroll"
-                rml="hr_ecuador/report/payroll_report.rml"
+                name="hrpayroll"
+                rml="hr_ecuador/report/hr_payroll.rml"
                 auto="False"
                 header="False"/>
 				

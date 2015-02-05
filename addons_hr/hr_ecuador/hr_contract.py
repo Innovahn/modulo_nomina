@@ -113,6 +113,24 @@ class hr_contract(osv.osv):
     def _compute_tax(self, cr, uid, ids, field_name, arg, context):
         obj = self.browse(cr, uid, ids)[0]
         res = self.pool.get('hr.contract.period').search(cr, uid, [('date_stop','<=','31-12-'+strftime('%Y'))])
+	result={}
+	print "--"*60
+	print res
+
+	#if res==[]:
+	print "prueba entro-----------------------------------------"
+	#result['value']={'':""}
+	print "%!"*20
+		#return result['warning']={'title':" Tabla de Retenciones","message":"No existen retenciones en el Sistema"}
+		#result = {'warning': {
+            	#	'title': _('Warning'),
+		#        'message': _('My warning message.')
+        	#	 }
+	result['value']={'':""}
+	result['warning']={'title' :"Error de Usuario", "message":"La fecha de nacimiento no puede ser mayor a la actual"}
+	print "(/"*60
+	#	return {'value' : result}
+	#else:
 	print "!"*90
         print res
 	print obj.wage
@@ -120,29 +138,36 @@ class hr_contract(osv.osv):
 
 	ing_grav = (obj.wage + obj.help_food) * len(res)
 	print "&"*90+"ing_grav"
-        print ing_grav
+       	print ing_grav
 	t_whelp = obj.wage * len(res)
-        ap_personal = t_whelp * 0.0935
+       	ap_personal = t_whelp * 0.0935
         t_wiess = ing_grav - ap_personal
 	print "'"*60 + "t_wiess"
 	print t_wiess
-        gastos_personales = obj.proyeccion + obj.proy_vivienda + obj.proy_salud + obj.proy_alimentacion + obj.proy_vestimenta
+       	gastos_personales = obj.proyeccion + obj.proy_vivienda + obj.proy_salud + obj.proy_alimentacion + obj.proy_vestimenta
         base = t_wiess - gastos_personales
         
 	print "%"*60 + "base"
 	print base
 	sql = "SELECT l.percent, l.fraccion_basica, l.frac_basica_tax FROM hr_base_retention t, hr_base_retencion_line l WHERE \
                                      t.year='%s' AND l.fraccion_basica <=%f and %f <= l.exceso_hasta" % (strftime('%Y'),base,base)
-        cr.execute(sql)
-        res1 = cr.fetchall()
+       	cr.execute(sql)
+       	res1 = cr.fetchall()
 	print "#"*90	
 	print type(res1)
 	print len(res1)
-        exed = base - res1[0][1]
-        pago_exed = exed * res1[0][0]
-        total = pago_exed + res1[0][2]
+#      	exed = base - res1[0][1]
+      
+       	exed = base - 23454
+
+	#pago_exed = exed * res1[0][0]
+	pago_exed = exed * 646
+
+       #total = pago_exed + res1[0][2]
+       	total = pago_exed + 6544
         return{ids[0] : total}
-        
+       # return result
+
     def _compute_cost_hour(self,cr, uid, ids, field_name, arg, context):
         obj = self.browse(cr, uid, ids)[0]
         return {ids[0] : (obj.wage + obj.help_food)/240 }
